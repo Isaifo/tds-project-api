@@ -41,6 +41,30 @@ app.MapGet("/models", () =>
     return Results.Ok(modelService);
 });
 
+app.MapGet("/models/{id}", (int id, HttpRequest request) =>
+
+{
+    var modelService = app.Services.GetRequiredService<List<Model>>();
+    var model = modelService.FirstOrDefault(m => m.Id == id);
+
+    if (model == null)
+    {
+        return Results.NotFound();
+    }
+
+    return Results.Ok(model);
+
+});
+
+
+app.MapPost("/models/create", (Task model) =>
+
+{ 
+  //  var modelService = app.Services.GetRequiredService<List<Model>>();
+    // model.Id = modelService.Max(t => t.Id) + 1;
+   // modelService.Add(model);
+});
+
 
 app.UseHttpsRedirection();
 
